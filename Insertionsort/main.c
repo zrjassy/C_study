@@ -8,6 +8,7 @@ void dist(int n){
 }
 
 int main(){
+    int x=10;
     int test=10;
     dist(test);
     return 0;
