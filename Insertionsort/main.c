@@ -10,7 +10,7 @@ struct max
     int end;
 };
 
-// 算法1：循环遍历所有可能的组合，求其中的最大值。
+// 算法1：循环遍历所有可能的组合，求其中的最大值。复杂度为O(N^3)
 struct max MaxSubSequenceSum(const int A[], int N)
 {
     int thisSum, MaxSum, i, j, k;
