@@ -19,7 +19,8 @@ long int Pow(long int X, unsigned int N)
     if (IsEven(N))
         return Pow(X * X, N / 2);
     else
-        return Pow(X * X, N / 2) * X;
+        // return Pow(X * X, N / 2) * X;
+        return Pow(X, N - 1) * X;
 }
 
 int main()
