@@ -1,6 +1,8 @@
 #include "List.h"
 #include <stdlib.h>
 #include <stdio.h>
+#define Error( Str )        FatalError( Str )
+#define FatalError( Str )   fprintf( stderr, "%s\n", Str ), exit( 1 )
 
 /* Place in the interface file */
 struct Node
@@ -87,13 +89,13 @@ void Insert(ElementType X, List L, Position P)
 {
     Position TmpCell;
 
-    /* 1*/ TmpCell = malloc(sizeof(struct Node));
-    /* 2*/ if (TmpCell == NULL)
-        /* 3*/ FatalError("Out of space!!!");
+    TmpCell = malloc(sizeof(struct Node));
+    if (TmpCell == NULL)
+        FatalError("Out of space!!!");
 
-    /* 4*/ TmpCell->Element = X;
-    /* 5*/ TmpCell->Next = P->Next;
-    /* 6*/ P->Next = TmpCell;
+    TmpCell->Element = X;
+    TmpCell->Next = P->Next;
+    P->Next = TmpCell;
 }
 /* END */
 
