@@ -52,6 +52,24 @@ int insert(sequenlist *L, char x, int i)
     return 1;
 }
 
+// 删除某位置处的节点
+int delete (sequenlist *L, int i)
+{
+    int j;
+    if ((i < 1) || (i > L->last + 1))
+    {
+        printf("error\n");
+        return 0;
+    }
+    else
+    {
+        for (j = i; j <= L->last; j++)
+            L->data[j - 1] = L->data[j];
+        L->last--;
+    }
+    return 1;
+}
+
 // 输出顺序表L中的内容
 void Output(sequenlist *L)
 {
@@ -68,11 +86,18 @@ int main()
     int i, ret;
     L = Create();
     Output(L);
+    // insert
     printf("insert:");
     scanf(" %c", &ch);
     printf("position:");
     scanf(" %d", &i);
     ret = insert(L, ch, i);
+    if (ret)
+        Output(L);
+    // delete
+    printf("deleteposition:");
+    scanf(" %d", &i);
+    ret = delete (L, i);
     if (ret)
         Output(L);
     return 0;
