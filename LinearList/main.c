@@ -20,7 +20,7 @@ sequenlist *Create()
     L = (sequenlist *)malloc(sizeof(sequenlist));
     L->last = -1;
     printf("Input:(end with #).\n");
-    while ((ch = getchar()) != '#')
+    while ((ch =getchar()) != '#')
     {
         L->data[i++] = ch;
         L->last++;
