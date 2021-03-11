@@ -1,8 +1,8 @@
 #include "List.h"
 #include <stdlib.h>
 #include <stdio.h>
-#define Error( Str )        FatalError( Str )
-#define FatalError( Str )   fprintf( stderr, "%s\n", Str ), exit( 1 )
+#define Error(Str) FatalError(Str)
+#define FatalError(Str) fprintf(stderr, "%s\n", Str), exit(1)
 
 /* Place in the interface file */
 struct Node
@@ -46,7 +46,6 @@ Position Find(ElementType X, List L)
 
     return P;
 }
-
 
 /* Delete from a list */
 /* Cell pointed to by P->Next is wiped out */
