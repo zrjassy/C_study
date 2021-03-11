@@ -28,5 +28,5 @@ int main()
     long int X = 12000;
     int N = 6;
     long int Y = Pow(X, N);
-    printf("%ld", Y);
+    printf("%ld\n", Y);
 }
