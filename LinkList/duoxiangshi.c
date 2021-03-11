@@ -97,25 +97,25 @@ void Output(polyNode *head)
 {
     polyNode *p;
     printf("each coef and exp is :");
-    p=head->next;
-    while (p!=head)
+    p = head->next;
+    while (p != head)
     {
-        printf("%.1f,%d ",p->coef,p->exp);
-        p=p->next;
+        printf("%.1f,%d ", p->coef, p->exp);
+        p = p->next;
     }
     printf("\n");
 }
 
 int main()
 {
-    polyNode *ha,*hb;
+    polyNode *ha, *hb;
     printf("\ncreate hA:");
     ha = Create();
     Output(ha);
     printf("\ncreate hB:");
-    hb=Create();
+    hb = Create();
     Output(hb);
-    ha = PolyAdd(ha,hb);
+    ha = PolyAdd(ha, hb);
     printf("\nhA+hB:\n");
     Output(ha);
     return 0;
