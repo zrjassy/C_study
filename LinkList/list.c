@@ -71,7 +71,7 @@ int main()
     // Output(head);
     LinkList *p1 = Get(head, 3);
     printf("%d\n", p1->score);
-    LinkList *p2 = Locate(head, 15);
+    LinkList *p2 = Locate(head, 2);
     printf("%p\n", p2);
     return 0;
 }
