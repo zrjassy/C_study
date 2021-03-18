@@ -30,6 +30,7 @@ void Print(LinkList *L)
         printf("%d ", L->score);
         L = L->next;
     }
+    printf("\n");
 }
 
 LinkList *Reverse(LinkList *L)
@@ -45,6 +46,20 @@ LinkList *Reverse(LinkList *L)
     return A;
 }
 
+int Circle(LinkList *L)
+{
+    LinkList *fast,*slow;
+    fast=slow=L;
+    while((fast!=NULL)&&(fast->next!=NULL))
+    {
+        fast=fast->next->next;
+        slow=slow->next;
+        if(fast==slow)
+            return 1;
+    }
+    return 0;
+}
+
 int main()
 {
     LinkList *L1;
@@ -52,6 +67,8 @@ int main()
     scanf("%d", &n);
     L1 = Creat(n);
     L1 = Reverse(L1);
+    int x=Circle(L1);
     Print(L1);
+    printf("%d\n",x);
     return 0;
 }
