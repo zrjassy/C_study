@@ -1,3 +1,5 @@
+#ifndef __LIST_H__
+#define __LIST_H__
 typedef struct doubleNode
 {
     int data;
@@ -12,7 +14,9 @@ typedef struct doubleLinkList
 
 dList *Create();
 dList *Insert(dList *List, int pos, int data);
-dList *Delete(dList *List, int pos);
-dList *Get(dList *List, int pos);
-dList *Replace(dList *List, int pos, int data);
-int *Has(dList *List, int data);
+// dList *Delete(dList *List, int pos);
+// dList *Get(dList *List, int pos);
+// dList *Replace(dList *List, int pos, int data);
+// int *Has(dList *List, int data);
+
+#endif
