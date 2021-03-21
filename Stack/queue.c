@@ -39,7 +39,8 @@ void DivideIntoGroup(int n, int R[][9], int cq[], int result[])
         pre = I;
     } while (rear != front);
     for (i = 0; i < n; i++)
-        printf("%d ", result[n]);
+        printf("%d ", result[i]);
+    printf("\n");
 }
 
 int main()
@@ -53,8 +54,8 @@ int main()
                   {0, 0, 1, 0, 1, 1, 0, 0, 0},
                   {0, 1, 0, 0, 0, 0, 0, 0, 0},
                   {0, 1, 0, 1, 1, 0, 0, 0, 0}};
-    int cq[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-    int result[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int cq[9];
+    int result[9];
     int n = 9;
     DivideIntoGroup(n, R, cq, result);
     return 0;
