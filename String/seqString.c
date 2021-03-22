@@ -45,6 +45,29 @@ seqString *Create()
     return s;
 }
 
+// 带回溯的模式匹配
+int Index(seqString *s,seqString *t)
+{
+    int i=0,j=0;
+    while (i<s->len&&j<t->len)
+    {
+        if(s->ch[i]==t->ch[j])
+        {
+            i++;j++;
+        }
+        else
+        {
+            i=i-j+1;
+            j=0;
+        }
+    }
+    if(j==t->len)
+        return i-t->len;
+    else
+        return -1;
+    
+}
+
 void Output(seqString *s)
 {
     for (int i = 0; i < s->len; i++)
@@ -61,6 +84,9 @@ int main()
     Output(s1);
     s2 = Create();
     Output(s2);
+    int q;
+    q=Index(s1,s2);
+    printf("Index:%d\n",q);
     s1 = StrCat(s1, s2);
     Output(s1);
     return 0;
