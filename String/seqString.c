@@ -71,9 +71,7 @@ int Index(seqString *s,seqString *t)
 void Output(seqString *s)
 {
     for (int i = 0; i < s->len; i++)
-    {
         printf("%c", s->ch[i]);
-    }
     printf("\n");
 }
 
