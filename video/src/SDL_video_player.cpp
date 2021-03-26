@@ -58,7 +58,7 @@ SDL_video_player::~SDL_video_player()
 void SDL_video_player::SDL_init()
 {
     //创建窗口
-    window = SDL_CreateWindow("Simplest YUV Player",
+    window = SDL_CreateWindow("YUV Player",
                               SDL_WINDOWPOS_UNDEFINED,
                               SDL_WINDOWPOS_UNDEFINED,
                               video_width,
