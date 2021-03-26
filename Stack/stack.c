@@ -59,4 +59,25 @@ datatype *PopS(stack *S)
     }
 }
 
+stack *Create()
+{
+    stack *s;
+    s=(stack *)malloc(sizeof(stack));
+    s->Top=-1;
+}
+
+int main()
+{
+    /* code */
+    stack *s;
+    s=Create();
+    s=PushStackS(s,1);
+    s=PushStackS(s,4);
+    s=PushStackS(s,2);
+    s=PushStackS(s,7);
+    int *x=PopS(s);
+    printf("%d\n",*x);
+    return 0;
+}
+
 

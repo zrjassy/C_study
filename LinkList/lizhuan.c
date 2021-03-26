@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct student
+typedef struct Node
 {
-    int score;
-    struct student *next;
+    int data;
+    struct Node *next;
 } LinkList;
 
 LinkList *Creat(int n)
@@ -15,27 +15,27 @@ LinkList *Creat(int n)
     for (int i = 0; i < n; i++)
     {
         node = (LinkList *)malloc(sizeof(LinkList));
-        scanf(" %d", &node->score);
+        scanf(" %d", &node->data);
         end->next = node;
         end = node;
     }
     end->next = NULL;
-    return head->next;
+    return head;
 }
 
 void Print(LinkList *L)
 {
-    while (L != NULL)
+    while (L->next != NULL)
     {
-        printf("%d ", L->score);
         L = L->next;
+        printf("%d ", L->data);
     }
     printf("\n");
 }
 
 LinkList *Reverse(LinkList *L)
 {
-    LinkList *A = NULL, *B = L;
+    LinkList *A = NULL, *B = L->next;
     while (B != NULL)
     {
         LinkList *p = B->next;
@@ -48,16 +48,33 @@ LinkList *Reverse(LinkList *L)
 
 int Circle(LinkList *L)
 {
-    LinkList *fast,*slow;
-    fast=slow=L;
-    while((fast!=NULL)&&(fast->next!=NULL))
+    LinkList *fast, *slow;
+    fast = slow = L->next;
+    while ((fast != NULL) && (fast->next != NULL))
     {
-        fast=fast->next->next;
-        slow=slow->next;
-        if(fast==slow)
+        fast = fast->next->next;
+        slow = slow->next;
+        if (fast == slow)
             return 1;
     }
     return 0;
+}
+
+LinkList *Get(LinkList *head,int pos)
+{
+    int i=0;
+    LinkList *p;
+    p=head;
+    // while ((p->next!=NULL) && (i<pos))
+    // {
+    //     p=p->next;
+    //     i++;
+    // }
+    for(i=0;(p->next!=NULL) && (i<pos);i++)
+        p=p->next;
+    if(i==pos) return p;
+    else return NULL;
+    
 }
 
 int main()
@@ -66,9 +83,11 @@ int main()
     int n;
     scanf("%d", &n);
     L1 = Creat(n);
-    L1 = Reverse(L1);
-    int x=Circle(L1);
+    LinkList *x=Get(L1,2);
+    printf("%d\n",x->data);
+    // L1 = Reverse(L1);
+    // int x=Circle(L1);
     Print(L1);
-    printf("%d\n",x);
+    // printf("%d\n",x);
     return 0;
 }
