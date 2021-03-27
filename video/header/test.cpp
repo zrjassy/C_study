@@ -14,7 +14,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    char filepath[] = "../resources/test2.mp4";
+    char filepath[] = "../resources/test.mp4";
     FILE *fp_yuv = fopen("test_out.yuv", "wb+");
     FILE *fp_h264 = fopen("test_out.h264", "wb+");
     //注册所有组件
