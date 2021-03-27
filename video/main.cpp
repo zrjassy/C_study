@@ -5,8 +5,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    const char *file = "resources/BasketballDrill_832x480_50.yuv";
-    SDL_video_player player(file, 832, 480, 50);
+    const char *file = "header/test_out.yuv";
+    SDL_video_player player(file, 1000, 562, 24);
     player.video_play();
     return 0;
 }

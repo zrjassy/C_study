@@ -45,6 +45,7 @@ private:
     // 2.显示窗口的分辨率
     int win_width;
     int win_height;
+    static int fps;
 
     // YUV文件句柄
     FILE *video_fd;

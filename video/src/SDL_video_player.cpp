@@ -2,8 +2,9 @@
 #include "SDL_video_player.h"
 
 int SDL_video_player::s_thread_exit=0; 
+int SDL_video_player::fps=0;
 
-SDL_video_player::SDL_video_player(const char *file, int width, int height, int fps)
+SDL_video_player::SDL_video_player(const char *file, int width, int height, int fps1)
 {
     window = NULL;                    // 窗口
     renderer = NULL;                  // 渲染
@@ -18,6 +19,7 @@ SDL_video_player::SDL_video_player(const char *file, int width, int height, int 
     // 2.显示窗口的分辨率
     win_width = width;
     win_height = height;
+    fps = fps1;
 
     // YUV文件句柄
     video_fd = NULL;
@@ -104,7 +106,7 @@ int SDL_video_player::refresh_video_timer(void *data)
         SDL_Event event;
         event.type = REFRESH_EVENT;
         SDL_PushEvent(&event);
-        SDL_Delay(floor(1000/50));
+        SDL_Delay(floor(1000/fps));
     }
 
     s_thread_exit = 0;
@@ -170,4 +172,7 @@ void SDL_video_player::video_play()
             break;
         }
     }
+
+    if(timer_thread)
+        SDL_WaitThread(timer_thread, NULL); // 等待线程退出
 }
