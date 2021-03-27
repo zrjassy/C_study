@@ -30,13 +30,12 @@ public:
 
 private:
     // SDL
-    SDL_Event event;          // 事件
-    SDL_Rect rect;            // 矩形
-    SDL_Window *window;       // 窗口
-    SDL_Renderer *renderer;   // 渲染
-    SDL_Texture *texture;     // 纹理
-    
-    uint32_t pixformat;       // YUV420P，即是SDL_PIXELFORMAT_IYUV
+    SDL_Event event;        // 事件
+    SDL_Rect rect;          // 矩形
+    SDL_Window *window;     // 窗口
+    SDL_Renderer *renderer; // 渲染
+    SDL_Texture *texture;   // 纹理
+    uint32_t pixformat;     // YUV420P，即是SDL_PIXELFORMAT_IYUV
 
     // 分辨率
     // 1. YUV的分辨率
@@ -50,24 +49,17 @@ private:
     // YUV文件句柄
     FILE *video_fd;
     const char *yuv_path;
-    int SCREEN_FPS;
-    int SCREEN_TICKS_PER_FRAME;
-
-     // 退出标志 = 1则退出
 
     void SDL_init();
-    static int s_thread_exit; 
+    // 退出标志 = 1则退出
+    static int s_thread_exit;
     static int refresh_video_timer(void *data);
-
 
     //读取数据后先把放到buffer里面
     size_t video_buff_len;
     uint8_t *video_buf;
 
     // 测试的文件是YUV420P格式
-    uint32_t y_frame_len;
-    uint32_t u_frame_len;
-    uint32_t v_frame_len;
     uint32_t yuv_frame_len;
     /* data */
 };

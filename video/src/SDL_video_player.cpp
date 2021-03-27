@@ -1,10 +1,10 @@
 #include <iostream>
 #include "SDL_video_player.h"
 
-int SDL_video_player::s_thread_exit=0; 
-int SDL_video_player::fps=0;
+int SDL_video_player::s_thread_exit = 0;
+int SDL_video_player::fps = 0;
 
-SDL_video_player::SDL_video_player(const char *file, int width, int height, int fps1)
+SDL_video_player::SDL_video_player(const char *file, int width, int height, int Fps)
 {
     window = NULL;                    // 窗口
     renderer = NULL;                  // 渲染
@@ -19,22 +19,17 @@ SDL_video_player::SDL_video_player(const char *file, int width, int height, int 
     // 2.显示窗口的分辨率
     win_width = width;
     win_height = height;
-    fps = fps1;
+    fps = Fps;
 
     // YUV文件句柄
     video_fd = NULL;
     yuv_path = file;
-    SCREEN_FPS = fps;
-    SCREEN_TICKS_PER_FRAME = 1000 / fps;
 
     video_buff_len = 0;
     video_buf = NULL;
 
     // 测试的文件是YUV420P格式
-    y_frame_len = video_width * video_height;
-    u_frame_len = video_width * video_height / 4;
-    v_frame_len = video_width * video_height / 4;
-    yuv_frame_len = y_frame_len + u_frame_len + v_frame_len;
+    yuv_frame_len = video_width * video_height * 3 / 2;
 
     // s_thread_exit = 0; // 退出标志 = 1则退出
 
@@ -102,11 +97,11 @@ int SDL_video_player::refresh_video_timer(void *data)
 {
     while (!s_thread_exit)
     {
-		//处理每帧数据
+        //处理每帧数据
         SDL_Event event;
         event.type = REFRESH_EVENT;
         SDL_PushEvent(&event);
-        SDL_Delay(floor(1000/fps));
+        SDL_Delay(floor(1000 / fps));
     }
 
     s_thread_exit = 0;
@@ -121,9 +116,7 @@ int SDL_video_player::refresh_video_timer(void *data)
 
 void SDL_video_player::video_play()
 {
-    timer_thread = SDL_CreateThread(refresh_video_timer,
-                                    NULL,
-                                    NULL);
+    timer_thread = SDL_CreateThread(refresh_video_timer, NULL, NULL);
     while (1)
     {
         // 收取SDL系统里面的事件
@@ -173,6 +166,6 @@ void SDL_video_player::video_play()
         }
     }
 
-    if(timer_thread)
+    if (timer_thread)
         SDL_WaitThread(timer_thread, NULL); // 等待线程退出
 }
