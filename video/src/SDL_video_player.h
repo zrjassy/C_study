@@ -27,6 +27,8 @@ public:
     ~SDL_video_player();
     SDL_Thread *timer_thread; // 请求刷新线程
     void video_play();
+    int yuv2rgb(uint8_t *yuv,uint8_t *rgb);
+    void CONVERT_24to32(unsigned char *image_in,unsigned char *image_out,int w,int h);
 
 private:
     // SDL
@@ -50,8 +52,6 @@ private:
     // YUV文件句柄
     FILE *video_fd;
     const char *yuv_path;
-    int SCREEN_FPS;
-    int SCREEN_TICKS_PER_FRAME;
 
      // 退出标志 = 1则退出
 
@@ -63,12 +63,11 @@ private:
     //读取数据后先把放到buffer里面
     size_t video_buff_len;
     uint8_t *video_buf;
+    uint8_t *video_buf_rgb;
 
     // 测试的文件是YUV420P格式
-    uint32_t y_frame_len;
-    uint32_t u_frame_len;
-    uint32_t v_frame_len;
     uint32_t yuv_frame_len;
+    uint32_t rgb_frame_len;
     /* data */
 };
 

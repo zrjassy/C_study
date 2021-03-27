@@ -10,8 +10,8 @@ SDL_video_player::SDL_video_player(const char *file, int width, int height, int 
     renderer = NULL;                  // 渲染
     texture = NULL;                   // 纹理
     timer_thread = NULL;              // 请求刷新线程
-    pixformat = SDL_PIXELFORMAT_IYUV; // YUV420P，即是SDL_PIXELFORMAT_IYUV
-
+    // pixformat = SDL_PIXELFORMAT_IYUV; // YUV420P，即是SDL_PIXELFORMAT_IYUV
+    pixformat = SDL_PIXELFORMAT_ARGB8888;
     // 分辨率
     // 1. YUV的分辨率
     video_width = width;
@@ -24,17 +24,14 @@ SDL_video_player::SDL_video_player(const char *file, int width, int height, int 
     // YUV文件句柄
     video_fd = NULL;
     yuv_path = file;
-    SCREEN_FPS = fps;
-    SCREEN_TICKS_PER_FRAME = 1000 / fps;
 
     video_buff_len = 0;
     video_buf = NULL;
+    video_buf_rgb = NULL;
 
     // 测试的文件是YUV420P格式
-    y_frame_len = video_width * video_height;
-    u_frame_len = video_width * video_height / 4;
-    v_frame_len = video_width * video_height / 4;
-    yuv_frame_len = y_frame_len + u_frame_len + v_frame_len;
+    yuv_frame_len = video_width * video_height * 1.5;
+    rgb_frame_len = video_width * video_height * 3;
 
     // s_thread_exit = 0; // 退出标志 = 1则退出
 
@@ -45,6 +42,8 @@ SDL_video_player::~SDL_video_player()
 {
     if (video_buf)
         free(video_buf);
+    if (video_buf_rgb)
+        free(video_buf_rgb);
     if (video_fd)
         fclose(video_fd);
     if (texture)
@@ -81,6 +80,7 @@ void SDL_video_player::SDL_init()
 
     // 分配空间
     video_buf = (uint8_t *)malloc(yuv_frame_len);
+    video_buf_rgb = (uint8_t *)malloc(rgb_frame_len);
     if (!video_buf)
     {
         fprintf(stderr, "Failed to alloce yuv frame space!\n");
@@ -137,8 +137,12 @@ void SDL_video_player::video_play()
                 fprintf(stderr, "Failed to read data from yuv file!\n");
                 s_thread_exit = 1;
             }
+            int x;
+            x=yuv2rgb(video_buf,video_buf_rgb);
+            unsigned char buffer_convert[video_width*video_height*4];
+            CONVERT_24to32(video_buf_rgb,buffer_convert,video_width,video_height);
             // 设置纹理的数据 video_width = 320， plane
-            SDL_UpdateTexture(texture, NULL, video_buf, video_width);
+            SDL_UpdateTexture(texture, NULL, buffer_convert, video_width*4);
 
             // 显示区域，可以通过修改w和h进行缩放
             rect.x = 0;
@@ -175,4 +179,61 @@ void SDL_video_player::video_play()
 
     if(timer_thread)
         SDL_WaitThread(timer_thread, NULL); // 等待线程退出
+}
+
+int SDL_video_player::yuv2rgb(uint8_t *yuv,uint8_t *rgb)
+{
+    if (video_width < 1 || video_height < 1 || yuv == NULL || rgb == NULL)
+        return 0;
+    const long len = video_width * video_height;
+    unsigned char* yData = yuv;
+    unsigned char* uData = &yData[len];
+    unsigned char* vData = &uData[len >> 2];
+
+    int bgr[3];
+    int yIdx,uIdx,vIdx,idx;
+    for (int i = 0;i < video_height;i++){
+        for (int j = 0;j < video_width;j++){
+            yIdx = i * video_width + j;
+            vIdx = (i/2) * (video_width/2) + (j/2);
+            uIdx = vIdx;
+
+            bgr[2] = (int)(yData[yIdx] + 1.779 * (uData[uIdx] - 128));                                    // b分量
+            bgr[1] = (int)(yData[yIdx] - 0.34413 * (uData[uIdx] - 128) - 0.71414 * (vData[vIdx] - 128));    // g分量
+            bgr[0] = (int)(yData[yIdx] + 1.4075 * (vData[uIdx] - 128));                                    // r分量
+
+            for (int k = 0;k < 3;k++){
+                idx = (i * video_width + j) * 3 + k;
+                if(bgr[k] >= 0 && bgr[k] <= 255)
+                    rgb[idx] = bgr[k];
+                else
+                    rgb[idx] = (bgr[k] < 0)?0:255;
+            }
+        }
+    }
+    return 1;
+}
+
+
+//Convert RGB24/BGR24 to RGB32/BGR32
+//And change Endian if needed
+void SDL_video_player::CONVERT_24to32(unsigned char *image_in,unsigned char *image_out,int w,int h){
+	for(int i =0;i<h;i++)
+		for(int j=0;j<w;j++){
+			//Big Endian or Small Endian?
+			//"ARGB" order:high bit -> low bit.
+			//ARGB Format Big Endian (low address save high MSB, here is A) in memory : A|R|G|B
+			//ARGB Format Little Endian (low address save low MSB, here is B) in memory : B|G|R|A
+			if(SDL_BYTEORDER==SDL_LIL_ENDIAN){
+				//Little Endian (x86): R|G|B --> B|G|R|A
+				image_out[(i*w+j)*4+0]=image_in[(i*w+j)*3+2];
+				image_out[(i*w+j)*4+1]=image_in[(i*w+j)*3+1];
+				image_out[(i*w+j)*4+2]=image_in[(i*w+j)*3];
+				image_out[(i*w+j)*4+3]='0';
+			}else{
+				//Big Endian: R|G|B --> A|R|G|B
+				image_out[(i*w+j)*4]='0';
+				memcpy(image_out+(i*w+j)*4+1,image_in+(i*w+j)*3,3);
+			}
+		}
 }
