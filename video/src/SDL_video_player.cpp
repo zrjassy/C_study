@@ -42,6 +42,8 @@ SDL_video_player::~SDL_video_player()
         free(video_buf);
     if (video_fd)
         fclose(video_fd);
+    if (timer_thread)
+        SDL_WaitThread(timer_thread, NULL); 
     if (texture)
         SDL_DestroyTexture(texture);
     if (renderer)
@@ -166,6 +168,5 @@ void SDL_video_player::video_play()
         }
     }
 
-    if (timer_thread)
-        SDL_WaitThread(timer_thread, NULL); // 等待线程退出
+    
 }
