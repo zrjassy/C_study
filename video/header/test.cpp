@@ -34,13 +34,18 @@ int main(int argc, char *argv[])
         return -1;
     }
     int videoindex = -1;
+    int audioindex = -1;
     // 视频流和音频流
+    cout << pFormatCtx->streams[1]->codec->codec_type << endl;
     for (int i = 0; i < pFormatCtx->nb_streams; i++)
     {
         if (pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
         {
             videoindex = i;
-            break;
+        }
+        if (pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO)
+        {
+            audioindex = i;
         }
     }
     if (videoindex == -1)
@@ -48,13 +53,20 @@ int main(int argc, char *argv[])
         cout << "Didn't find a video stream." << endl;
         return -1;
     }
+    if (audioindex == -1)
+    {
+        cout << "Didn't find a audio stream." << endl;
+        return -1;
+    }
     AVCodecContext *pCodecCtx = pFormatCtx->streams[videoindex]->codec;
+    AVCodecContext *pAudioCodecCtx = pFormatCtx->streams[audioindex]->codec;
     cout << "test" << endl;
     cout << pCodecCtx->width << endl;
     cout << pCodecCtx->framerate.num << endl;
     cout << typeid(pCodecCtx->framerate.num).name() << endl;
     //查找解码器
     AVCodec *pCodec = avcodec_find_decoder(pCodecCtx->codec_id);
+    AVCodec *pAudioCodec = avcodec_find_decoder(pAudioCodecCtx->codec_id);
     if (pCodec == NULL)
     {
         cout << "Codec not found." << endl;
