@@ -26,6 +26,6 @@ int main()
     int N=7;
     int X=3;
     int i=BinarySearch(A,X,N);
-    printf("i:%d",i);
+    printf("i:%d\n",i);
     return 0;
 }
