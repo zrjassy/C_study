@@ -1,34 +1,27 @@
+#include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <pthread.h>
-#include <time.h>
-#include <semaphore.h>
 
-int main(int argc, char const *argv[])
+// 调试子进程时，在luanch.json修改设置
+int main(void)
 {
-    pid_t pid = fork();
+    pid_t pid;
+    char *message;
+    int n;
+    pid = fork();
     if (pid < 0)
     {
-        printf("err\n");
-        return 0;
+        perror("fork failed");
+        exit(1);
     }
-    else if (pid == 0)
+    if (pid == 0)
     {
-        printf("child:%d-%d\n", getpid(), getppid());
-        exit(0);
+        printf("This is the child process. My PID is: %d. My PPID is: %d.\n", getpid(), getppid());
     }
     else
     {
-        while (1)
-        {
-            int status;
-            wait(&status);
-            sleep(2);
-            printf("father:%d-%d\n", getpid(), getppid());
-        }
-        return 0;
+        printf("This is the parent process. My PID is %d.\n", getpid());
     }
+    return 0;
 }
