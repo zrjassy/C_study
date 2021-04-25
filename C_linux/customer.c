@@ -1,11 +1,11 @@
-# include <stdio.h>
-# include <stdlib.h>
-# include <time.h>
-# include <sys/types.h>
-# include <pthread.h>
-# include <semaphore.h>
-# include <string.h>
-# include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/types.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <string.h>
+#include <unistd.h>
 
 #define BUFFER_SIZE 5
 typedef int buffer_item;
@@ -19,7 +19,8 @@ buffer_item buffer[BUFFER_SIZE];
 int in, out;
 
 //存储数据的结构体
-struct data {
+struct data
+{
     int id;
     int opTime;
     int lastTime;
@@ -27,7 +28,8 @@ struct data {
 };
 
 //有限缓存插入--生产
-int insert_item(buffer_item item) {
+int insert_item(buffer_item item)
+{
     /* insert item into buffer */
     buffer[out] = item;
     out = (out + 1) % BUFFER_SIZE;
@@ -35,19 +37,21 @@ int insert_item(buffer_item item) {
 }
 
 //有限缓存删除--消费
-int remove_item(buffer_item *item) {
+int remove_item(buffer_item *item)
+{
     /* remove an object from buffer and then place it in item */
     *item = buffer[in];
     in = (in + 1) % BUFFER_SIZE;
-    return 0;   
+    return 0;
 }
 
 //生产者
-void *producer(void* param) {
-    int productId = ((struct data*)param)->productId;
-    int lastTime = ((struct data*)param)->lastTime;
-    int opTime = ((struct data*)param)->opTime;
-    int id = ((struct data*)param)->id;
+void *producer(void *param)
+{
+    int productId = ((struct data *)param)->productId;
+    int lastTime = ((struct data *)param)->lastTime;
+    int opTime = ((struct data *)param)->opTime;
+    int id = ((struct data *)param)->id;
 
     free(param);
 
@@ -67,10 +71,11 @@ void *producer(void* param) {
 }
 
 //消费者
-void *consumer(void* param) {
-    int lastTime = ((struct data*)param)->lastTime;
-    int opTime = ((struct data*)param)->opTime;
-    int id = ((struct data*)param)->id;
+void *consumer(void *param)
+{
+    int lastTime = ((struct data *)param)->lastTime;
+    int opTime = ((struct data *)param)->opTime;
+    int id = ((struct data *)param)->id;
 
     free(param);
 
@@ -90,7 +95,8 @@ void *consumer(void* param) {
     pthread_exit(0);
 }
 
-int main() {
+int main()
+{
     //pthread
     pthread_t tid; // the thread identifier
 
@@ -107,23 +113,24 @@ int main() {
     in = out = 0;
 
     int id = 0;
-    while(scanf("%d", &id) != EOF) {
-        char role;      //producer or consumer
-        int opTime;     //operating time
-        int lastTime;   //run time
-        int productId;  //product id
+    while (scanf("%d", &id) != EOF)
+    {
+        char role;     //producer or consumer
+        int opTime;    //operating time
+        int lastTime;  //run time
+        int productId; //product id
         scanf("%c%d%d", &role, &opTime, &lastTime);
-        struct data* d = (struct data*)malloc(sizeof(struct data));
+        struct data *d = (struct data *)malloc(sizeof(struct data));
         d->id = id;
         d->opTime = opTime;
         d->lastTime = lastTime;
-        if(role == 'P') {
+        if (role == 'P')
+        {
             scanf("%d", &productId);
             d->productId = productId;
             pthread_create(&tid, &attr, producer, d);
-
         }
-        else if(role == 'C')
+        else if (role == 'C')
             pthread_create(&tid, &attr, consumer, d);
     }
 
