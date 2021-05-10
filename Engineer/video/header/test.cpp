@@ -14,8 +14,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    char filepath[] = "../resources/test2.mp4";
-    FILE *fp_yuv = fopen("test_out.yuv", "wb+");
+    char filepath[] = "/home/jassy/project/c/C_study/Engineer/video/header/test_out.h264";
+    FILE *fp_yuv = fopen("test_zr.yuv", "wb+");
     FILE *fp_h264 = fopen("test_out.h264", "wb+");
     //注册所有组件
     av_register_all();
@@ -43,19 +43,10 @@ int main(int argc, char *argv[])
         {
             videoindex = i;
         }
-        if (pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO)
-        {
-            audioindex = i;
-        }
     }
     if (videoindex == -1)
     {
         cout << "Didn't find a video stream." << endl;
-        return -1;
-    }
-    if (audioindex == -1)
-    {
-        cout << "Didn't find a audio stream." << endl;
         return -1;
     }
     AVCodecContext *pCodecCtx = pFormatCtx->streams[videoindex]->codec;
