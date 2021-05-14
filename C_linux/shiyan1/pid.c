@@ -23,7 +23,7 @@ int main(void)
         printf("child %p\n", &num);
         printf("PID %d\n",pid);
         printf("This is the child process. My PID is: %d. My PPID is: %d.\n", getpid(), getppid());
-        if (execl("/home/jassy/project/c/C_study/C_linux/hello", "hello", NULL) == -1)
+        if (execl("./hello", "hello", NULL) == -1)
         {
             perror("execl error ");
             exit(1);
