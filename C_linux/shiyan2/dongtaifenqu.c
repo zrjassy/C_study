@@ -125,7 +125,10 @@ LNode *bestmalloc(LNode *p, int size)
             bestsize = p->size;
             // break;
         }
-        p = p->next;
+        if(p->next!=NULL)
+            p = p->next;
+        else
+            break;
     }
     // 如果遍历完q依旧为空则说明没有空闲区可以分配,直接分配在最后
     if (q == NULL)
@@ -221,7 +224,7 @@ int main(int argc, char const *argv[])
     int action;
     while (1)
     {
-        printf("please choose a method：\n 1.Fisrt method\n 2.Best method\n 3.exit\n");
+        printf("please choose a method:\n 1.Fisrt method\n 2.Best method\n 3.exit\n");
         printf("Input:");
         scanf("%d", &option);
         if (option == 1 || option == 2)
