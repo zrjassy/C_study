@@ -6,14 +6,15 @@ typedef struct item
 {
     int num;
     int time;
+    int use;
 } Pro;
 
 void showmenu()
 {
-    printf("****f:FIFO页面置换****\n");
-    printf("****o:OPT页面置换****\n");
-    printf("****l:LRU页面置换****\n");
-    printf("****c:CLOCK页面置换****\n");
+    printf("****f:FIFO****\n");
+    printf("****o:OPT****\n");
+    printf("****l:LRU****\n");
+    printf("****c:CLOCK****\n");
     printf("Please enter the type.End with else.\n");
 }
 
@@ -155,7 +156,7 @@ void LRU(Pro *page, int pages, Pro *memory, int setsize)
     {
         int t;
         t = Search(page[i].num, memory, setsize);
-        if(t<0)
+        if (t < 0)
         {
             int time = -1; // 定义过去最长未使用时间
             for (int k = 0; k < setsize; k++)
@@ -165,12 +166,12 @@ void LRU(Pro *page, int pages, Pro *memory, int setsize)
                 {
                     current = k;
                     break;
-                } 
+                }
                 if (memory[k].time > time)
                 {
                     current = k;
                     time = memory[k].time;
-                }   
+                }
             }
             // 产生缺页中断
             if (memory[current].num != -1)
@@ -201,7 +202,6 @@ void LRU(Pro *page, int pages, Pro *memory, int setsize)
     printf("Page fault:%d,page rate:%f\n", missPages, missRate);
 }
 
-
 int main(int argc, char const *argv[])
 {
     int pages, setsize; // 页数目 驻留吉大小
@@ -219,6 +219,7 @@ int main(int argc, char const *argv[])
         printf("Page %d:", i);
         scanf("%d", &page[i].num);
         page[i].time = 0;
+        page[i].use = -1;
     }
     while (1)
     {
@@ -226,6 +227,7 @@ int main(int argc, char const *argv[])
         {
             memory[i].num = -1;
             memory[i].time = -1;
+            memory[i].use = -1;
         }
         showmenu();
         char T;
@@ -245,6 +247,7 @@ int main(int argc, char const *argv[])
         }
         else if (T == 'c')
         {
+            
             continue;
         }
         else
