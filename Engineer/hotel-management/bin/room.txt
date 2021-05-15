@@ -1,0 +1,5 @@
+100  single    300  0    50   0    
+101  single    350  1    100  2    
+102  double    450  0    100  1    
+103  kingbed   600  1    100  1    
+104  kingbed   700  1    200  0    

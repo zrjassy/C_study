@@ -1,0 +1,8 @@
+admin1001   123456 aaa      m   admin   df@asa.com          
+manag1001   123456 mmm      m   manager zxc@jk.com          
+recept1001  123456 rrr      f   recept  ppp@qq.com          
+clean1001
+  123456 ccc
+     f
+  cleaner tyu@xc.com
+         

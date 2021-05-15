@@ -16,9 +16,9 @@ int mainmenu()
     printf("please select:");
     int c;
     scanf("%d", &c);
-    while (c < 0 || c > 2)
+    while (c < 0 || c > 3)
     {
-        printf("input error,again:\n");
+        printf("error,input again:\n");
         scanf("%d", &c);
     }
     return c;
