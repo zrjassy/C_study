@@ -4,6 +4,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "hotel.h"
+
 int mainmenu()
 {
     printf("\t\t\t      酒店管理系统\n");
@@ -37,6 +39,7 @@ int main(int argc, char const *argv[])
 			case 1://control
 				break;
 			case 2://living
+                hotel_main();
 				break;
             case 3://eating
 				break;

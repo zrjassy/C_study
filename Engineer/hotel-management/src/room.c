@@ -330,7 +330,6 @@ int change_room()
 	return 0;
 }
 
-
 int stayroom_status(int roomid) //将入住的房间状态改为 1.不空
 {
 	FILE *fp;
