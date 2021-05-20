@@ -8,12 +8,12 @@
 
 int mainmenu()
 {
-    printf("\t\t\t      酒店管理系统\n");
+    printf("\t\t\t      hotel management\n");
     printf("\t\t\t===============================\n");
-    printf("\t\t\t      1 : 管理\n");
-    printf("\t\t\t      2 : 住宿\n");
-    printf("\t\t\t      3 : 用餐\n");
-    printf("\t\t\t      0 : 退出\n");
+    printf("\t\t\t      1 : control\n");
+    printf("\t\t\t      2 : living\n");
+    printf("\t\t\t      3 : eating\n");
+    printf("\t\t\t      0 : exit\n");
     printf("\t\t\t===============================\n");
     printf("please select:");
     int c;
@@ -37,9 +37,10 @@ int main(int argc, char const *argv[])
         switch(c)
 		{
 			case 1://control
+                add_room();
 				break;
 			case 2://living
-                hotel_main();
+                hotel_system();
 				break;
             case 3://eating
 				break;

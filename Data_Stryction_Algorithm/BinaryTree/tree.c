@@ -81,6 +81,31 @@ void PostOrder(bitTree *root)
     }
 }
 
+// 广度优先遍历
+void Layer(bitTree *root)
+{
+    bitTree *Q[MAXSIZE];
+    bitTree *s;
+    int rear = 1, front = 0;
+    Q[rear] = root;
+    while (front < rear)
+    {
+        front++;
+        s = Q[front];
+        printf("%c ", s->data);
+        if (s->lchild != NULL)
+        {
+            rear++;
+            Q[rear] = s->lchild;
+        }
+        if (s->rchild != NULL)
+        {
+            rear++;
+            Q[rear] = s->rchild;
+        }
+    }
+}
+
 // 根据先序和中序数组重建二叉树
 bitTree *BPI(char preod[], char inod[], int ps, int pe, int is, int ie)
 {
@@ -108,16 +133,18 @@ int main(int argc, char const *argv[])
     printf("\n");
     PostOrder(root);
     printf("\n");
+    Layer(root);
+    printf("\n");
 
     char pre[7] = {'a', 'b', 'd', 'e', 'c', 'f', 'g'};
     char in[7] = {'d', 'b', 'e', 'a', 'f', 'c', 'g'};
-    int ps,pe,is,ie;
-    ps=0;
-    is=0;
-    pe=6;
-    ie=6;
+    int ps, pe, is, ie;
+    ps = 0;
+    is = 0;
+    pe = 6;
+    ie = 6;
     bitTree *p;
-    p=BPI(pre,in,ps,pe,is,pe);
+    p = BPI(pre, in, ps, pe, is, pe);
     PreOrder(p);
     printf("\n");
     InOrder(p);

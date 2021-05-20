@@ -132,6 +132,7 @@ int main()
     q2 = Index_KMP(s1, s2);
     printf("Index:%d,%d\n", q, q2);
     s1 = StrCat(s1, s2);
+    s1 = StrCat(s1, s2);
     Output(s1);
     return 0;
 }

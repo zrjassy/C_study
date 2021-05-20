@@ -125,7 +125,7 @@ LNode *bestmalloc(LNode *p, int size)
             bestsize = p->size;
             // break;
         }
-        if(p->next!=NULL)
+        if (p->next != NULL)
             p = p->next;
         else
             break;
@@ -204,7 +204,8 @@ LNode *myFree(LNode *p, int n)
             break;
         }
         else if (p->next == NULL)
-        { //任务id不匹配时
+        {
+            //任务id不匹配时
             printf("error N\n");
             break;
         }
@@ -258,9 +259,7 @@ int main(int argc, char const *argv[])
                     printNode(head);
                 }
                 else if (action == 3)
-                {
                     printNode(head);
-                }
                 else if (action == 4)
                 {
                     destory(head);
@@ -269,9 +268,7 @@ int main(int argc, char const *argv[])
                     break;
                 }
                 else
-                {
                     printf("Error input!Please input again.\n");
-                }
             }
         }
         else if (option == 3)
@@ -280,9 +277,7 @@ int main(int argc, char const *argv[])
             break;
         }
         else
-        {
             printf("Error input!Please input again.\n");
-        }
     }
     return 0;
 }
