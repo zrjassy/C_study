@@ -35,8 +35,8 @@ int main(void)
         int status;
         wait(&status);
         num += 20;
-        printf("parent %d\n", num);
-        printf("parent %p\n", &num);
+        printf("parent：num %d\n", num);
+        printf("parent：num %p\n", &num);
         printf("child exit，status:%d\n", status);
         printf("This is the parent process. My PID is %d.My Child PID is %d.\n", getpid(), pid);
     }

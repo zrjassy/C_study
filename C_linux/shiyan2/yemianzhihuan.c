@@ -11,10 +11,10 @@ typedef struct item
 
 void showmenu()
 {
-    printf("****f:FIFO****\n");
-    printf("****o:OPT****\n");
-    printf("****l:LRU****\n");
-    printf("****c:CLOCK****\n");
+    printf("****f:FIFO页面置换****\n");
+    printf("****o:OPT页面置换***\n");
+    printf("****l:LRU页面置换****\n");
+    // printf("****c:CLOCK****\n");
     printf("Please enter the type.End with else.\n");
 }
 
